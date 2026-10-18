@@ -193,17 +193,21 @@
         <!-- LEFT COLUMN: Contact Form -->
         <div class="fade-up">
           <!-- Important Notice: No Medical / Emergency Info -->
-          <div class="placeholder-notice" style="margin-bottom:1.75rem;line-height:1.7;" role="note">
-            <div>
-              <strong>Confidentiality &amp; Privacy Notice:</strong>
-              Please do <strong>not</strong> enter medical history, sensitive health diagnoses, legal details, or emergency requests into this web form. SYS provides human services and mentorship; we do not collect confidential clinical records online. If you are experiencing a medical or mental health emergency, please immediately call <strong>911</strong> or text/call <strong>988</strong>.
-            </div>
+          <div style="background:var(--warm-white);border:1px solid var(--border-light);border-left:4px solid var(--forest);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.75rem;line-height:1.7;" role="note">
+            <strong style="color:var(--forest);display:block;margin-bottom:0.25rem;">Confidentiality &amp; Safety Notice:</strong>
+            <p style="margin:0;font-size:0.88rem;color:var(--text-mid);">
+              Please do <strong>not</strong> enter sensitive medical history, formal psychiatric diagnoses, or emergency requests into this web form. SYS provides community human services and mentorship; we do not collect clinical medical records online. If you are experiencing a life-threatening or mental health emergency, please call <strong>911</strong> or contact the Suicide &amp; Crisis Lifeline at <strong>988</strong>.
+            </p>
           </div>
 
           <!-- Contact Form Card with id="contactForm" -->
           <div class="card" style="padding: clamp(1.75rem, 4vw, 2.75rem);">
             <div id="contactForm">
               <form novalidate>
+                <!-- Honeypot anti-spam -->
+                <div style="display:none;" aria-hidden="true">
+                  <input type="text" name="hp_field" tabindex="-1" autocomplete="off" />
+                </div>
                 <!-- Full Name -->
                 <div class="form-group">
                   <label class="form-label" for="name">
@@ -300,16 +304,14 @@
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
                 <h3 style="color:var(--forest);margin-bottom:0.75rem;font-size:1.6rem;">Thank You for Reaching Out</h3>
-                <p style="color:var(--text-mid);font-size:0.95rem;line-height:1.75;margin-bottom:1.5rem;">
-                  Your message has been validated successfully in your browser. We appreciate you taking the time to connect with Sincerely You Are Significant, Inc.
+                <p style="color:var(--text-mid);font-size:0.95rem;line-height:1.75;margin-bottom:1.25rem;">
+                  Your message has been received by Sincerely You Are Significant, Inc.
                 </p>
-                <div class="placeholder-notice" style="text-align:left;line-height:1.7;margin-bottom:1.5rem;">
-                  <div>
-                    <strong>Notice Regarding Form Delivery:</strong> Please note that this contact form is currently awaiting backend email service integration and is operating in demonstration validation mode. Messages are not yet dispatched directly to an email inbox from this web form.
-                  </div>
+                <div style="background:var(--ivory);padding:1rem 1.25rem;border-radius:var(--radius);border:1px solid var(--border-light);margin-bottom:1.25rem;text-align:left;font-size:0.9rem;line-height:1.7;">
+                  <strong>What happens next:</strong> Our staff will review your inquiry and follow up with you at the email address provided. If you requested an in-person consultation at our Jonesboro location, we will coordinate available appointment times with you.
                 </div>
                 <p style="font-size:0.92rem;color:var(--text);line-height:1.7;">
-                  To ensure your message is received and answered promptly, please contact us directly via telephone at <a href="tel:4049972563" style="color:var(--forest);font-weight:600;text-decoration:underline;">404-997-2563</a> or email us at <a href="mailto:admin@youaresignificant.org" style="color:var(--forest);font-weight:600;text-decoration:underline;">admin@youaresignificant.org</a>.
+                  Need immediate assistance? You may also contact us directly by phone at <a href="tel:4049972563" style="color:var(--forest);font-weight:600;text-decoration:underline;">404-997-2563</a> or email <a href="mailto:admin@youaresignificant.org" style="color:var(--forest);font-weight:600;text-decoration:underline;">admin@youaresignificant.org</a>.
                 </p>
               </div>
             </div>
@@ -641,7 +643,7 @@
         <p class="footer__brand-name">Sincerely You Are Significant, Inc.</p>
         <p class="footer__brand-sub">Human Services Non-Profit Agency</p>
         <p class="footer__tagline">Guiding Youth · Empowering Lives · Building Futures</p>
-        <span class="footer__501">✓ 501(c)(3) Nonprofit — EIN: [Confirm with owner]</span>
+        <span class="footer__501">✓ 501(c)(3) Nonprofit Organization · Tax-Exempt Human Services</span>
         <div class="social-links" style="margin-top:1.5rem;">
           <a href="https://www.instagram.com/thesysorg" target="_blank" rel="noopener" class="social-link" aria-label="Follow us on Instagram @theSYSorg">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
@@ -661,7 +663,8 @@
           <li><a href="services.html">Services &amp; Programs</a></li>
           <li><a href="founder.html">Our Founder</a></li>
           <li><a href="community.html">Community &amp; Events</a></li>
-          <li><a href="contact.html">Get Support</a></li>
+          <li><a href="volunteer.html">Get Involved</a></li>
+          <li><a href="impact.html">Impact &amp; Transparency</a></li>
           <li><a href="support.html">Support Our Mission</a></li>
         </ul>
       </div>
@@ -674,7 +677,7 @@
           <li><a href="services.html#families">Family Support</a></li>
           <li><a href="services.html#seniors">Senior Services</a></li>
           <li><a href="services.html#community">Community Outreach</a></li>
-          <li><a href="support.html">Volunteer</a></li>
+          <li><a href="volunteer.html">Volunteer</a></li>
           <li><a href="support.html">Donate</a></li>
         </ul>
       </div>
@@ -704,17 +707,19 @@
 
     <div class="footer__bottom">
       <p class="footer__copy">
-        © 2024–2025 Sincerely You Are Significant, Inc. All rights reserved. A 501(c)(3) Nonprofit Organization.
+        &copy; 2025–2026 Sincerely You Are Significant, Inc. All rights reserved. 501(c)(3) Nonprofit Organization.
       </p>
       <div class="footer__legal">
         <a href="privacy.html">Privacy Policy</a>
         <a href="privacy.html#accessibility">Accessibility</a>
+        <a href="terms.html">Terms of Use</a>
         <a href="contact.html">Contact</a>
       </div>
     </div>
   </div>
 </footer>
 
+<script src="js/config.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

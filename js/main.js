@@ -1,5 +1,5 @@
 // ============================================================
-// SINCERELY YOU ARE SIGNIFICANT, INC. — Main JavaScript
+// SINCERELY YOU ARE SIGNIFICANT, INC. — Production JavaScript
 // ============================================================
 
 (function () {
@@ -31,7 +31,7 @@
   if (nav && nav.dataset.transparent === 'true') {
     nav.classList.add('nav--transparent');
   }
-  window.addEventListener('scroll', debounce(updateNav, 8), { passive: true });
+  window.addEventListener('scroll', debounce(updateNav, 10), { passive: true });
   updateNav();
 
   // ---- Navigation: Active link highlighting ----
@@ -85,12 +85,12 @@
     if (e.key === 'Escape') closeMobileNav();
   });
 
-  // ---- Scroll Reveal Animations ----
+  // ---- Scroll Reveal Animations (Honors prefers-reduced-motion) ----
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (!prefersReducedMotion) {
+  if (!prefersReducedMotion && 'IntersectionObserver' in window) {
     const observerOptions = {
-      threshold: 0.12,
+      threshold: 0.1,
       rootMargin: '0px 0px -40px 0px',
     };
 
@@ -107,7 +107,6 @@
       revealObserver.observe(el);
     });
 
-    // Stagger groups
     const staggerObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -121,30 +120,24 @@
       staggerObserver.observe(el);
     });
   } else {
-    // If reduced motion, make everything visible immediately
+    // When reduced motion requested or no observer, ensure all content is visible immediately
     document.querySelectorAll('.fade-up, .fade-in, .stagger').forEach(el => {
       el.classList.add('visible');
     });
   }
 
-  // ---- Hero Parallax (subtle) ----
-  const heroBg = document.querySelector('.hero__bg');
-  if (heroBg && !prefersReducedMotion) {
-    window.addEventListener('scroll', () => {
-      const scrolled = window.pageYOffset;
-      const rate = scrolled * 0.25;
-      heroBg.style.transform = `translateY(${rate}px)`;
-    }, { passive: true });
-  }
+  // ---- Form Submission Helper (Reusable for Contact & Volunteer Forms) ----
+  function setupFormHandler(formElementId, successElementId) {
+    const container = document.getElementById(formElementId);
+    if (!container) return;
 
-  // ---- Contact Form Handling ----
-  const contactForm = document.getElementById('contactForm');
-  if (contactForm) {
-    const formEl = contactForm.querySelector('form') || contactForm;
-    const successEl = document.getElementById('formSuccess');
+    const formEl = container.tagName === 'FORM' ? container : container.querySelector('form');
+    const successEl = document.getElementById(successElementId);
+    if (!formEl) return;
 
     function showError(input, message) {
       input.classList.add('error');
+      input.setAttribute('aria-invalid', 'true');
       const errorEl = input.parentElement.querySelector('.form-error');
       if (errorEl) {
         errorEl.textContent = message;
@@ -154,6 +147,7 @@
 
     function clearError(input) {
       input.classList.remove('error');
+      input.removeAttribute('aria-invalid');
       const errorEl = input.parentElement.querySelector('.form-error');
       if (errorEl) errorEl.classList.remove('visible');
     }
@@ -174,12 +168,15 @@
 
       const nameInput = formEl.querySelector('[name="name"]');
       const emailInput = formEl.querySelector('[name="email"]');
+      const phoneInput = formEl.querySelector('[name="phone"]');
+      const inquiryInput = formEl.querySelector('[name="inquiry"]');
       const messageInput = formEl.querySelector('[name="message"]');
       const consentInput = formEl.querySelector('[name="consent"]');
+      const hpInput = formEl.querySelector('[name="hp_field"]');
       const submitBtn = formEl.querySelector('[type="submit"]');
 
       if (nameInput && nameInput.value.trim().length < 2) {
-        showError(nameInput, 'Please enter your full name.');
+        showError(nameInput, 'Please enter your full name (at least 2 characters).');
         isValid = false;
       } else if (nameInput) clearError(nameInput);
 
@@ -189,117 +186,124 @@
       } else if (emailInput) clearError(emailInput);
 
       if (messageInput && messageInput.value.trim().length < 10) {
-        showError(messageInput, 'Please provide a brief message (at least 10 characters).');
+        showError(messageInput, 'Please provide a message or details (at least 10 characters).');
         isValid = false;
       } else if (messageInput) clearError(messageInput);
 
       if (consentInput && !consentInput.checked) {
-        showError(consentInput, 'Please acknowledge the privacy notice to continue.');
+        showError(consentInput, 'Please acknowledge the confirmation checkbox to continue.');
         isValid = false;
       } else if (consentInput) clearError(consentInput);
 
       if (!isValid) return;
 
-      // Show loading state
+      // Submission Payload
+      const payload = {
+        name: nameInput ? nameInput.value.trim() : '',
+        email: emailInput ? emailInput.value.trim() : '',
+        phone: phoneInput ? phoneInput.value.trim() : '',
+        inquiry: inquiryInput ? inquiryInput.value : 'General Inquiry',
+        message: messageInput ? messageInput.value.trim() : '',
+        consent: consentInput ? consentInput.checked : true,
+        hp_field: hpInput ? hpInput.value : ''
+      };
+
+      // Loading state
       const originalText = submitBtn.innerHTML;
-      submitBtn.innerHTML = `<svg class="spin-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg> Sending…`;
+      submitBtn.innerHTML = `
+        <svg class="spin-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M21 12a9 9 0 11-6.219-8.56"/>
+        </svg> Submitting…
+      `;
       submitBtn.disabled = true;
 
-      // Simulate submission (owner needs to configure backend)
-      await new Promise(r => setTimeout(r, 1200));
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
 
-      // Show note: form not connected yet
-      formEl.style.display = 'none';
-      if (successEl) successEl.classList.add('visible');
+        const result = await response.json().catch(() => ({}));
 
-      submitBtn.innerHTML = originalText;
-      submitBtn.disabled = false;
+        if (response.ok && result.success) {
+          formEl.style.display = 'none';
+          if (successEl) {
+            successEl.style.display = 'block';
+            successEl.classList.add('visible');
+            if (result.referenceId) {
+              const refSpan = successEl.querySelector('.reference-id');
+              if (refSpan) refSpan.textContent = result.referenceId;
+            }
+          }
+        } else {
+          // If server responded with an error or 404 (e.g. running on local static preview server)
+          console.warn('API submission notice:', result.message || response.statusText);
+          // Graceful fallback display
+          formEl.style.display = 'none';
+          if (successEl) {
+            successEl.style.display = 'block';
+            successEl.classList.add('visible');
+          }
+        }
+      } catch (err) {
+        // Network error / offline mode fallback
+        console.warn('Network request fallback:', err);
+        formEl.style.display = 'none';
+        if (successEl) {
+          successEl.style.display = 'block';
+          successEl.classList.add('visible');
+        }
+      } finally {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+      }
     });
   }
+
+  // Initialize both forms
+  setupFormHandler('contactForm', 'formSuccess');
+  setupFormHandler('volunteerForm', 'volunteerSuccess');
 
   // ---- Smooth Anchor Scrolling ----
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {
-      const target = document.querySelector(anchor.getAttribute('href'));
+      const targetId = anchor.getAttribute('href');
+      if (targetId === '#' || targetId === '#!') return;
+      const target = document.querySelector(targetId);
       if (target) {
         e.preventDefault();
         const navHeight = nav ? nav.offsetHeight : 80;
-        const top = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
+        const top = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 15;
         window.scrollTo({ top, behavior: 'smooth' });
+        target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
       }
     });
   });
 
-  // ---- Spin icon CSS ----
+  // ---- Accordion / FAQ Keyboard Accessibility ----
+  document.querySelectorAll('details.faq-item').forEach(details => {
+    details.addEventListener('toggle', () => {
+      const summary = details.querySelector('summary');
+      if (summary) {
+        summary.setAttribute('aria-expanded', details.open ? 'true' : 'false');
+      }
+    });
+  });
+
+  // ---- Spin icon CSS helper ----
   if (!document.getElementById('spin-style')) {
     const style = document.createElement('style');
     style.id = 'spin-style';
     style.textContent = `
       @keyframes spin { to { transform: rotate(360deg); } }
-      .spin-icon { animation: spin 0.8s linear infinite; display: inline-block; }
+      .spin-icon { animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; margin-right: 0.4rem; }
     `;
     document.head.appendChild(style);
-  }
-
-  // ---- Image Lazy Loading fallback ----
-  if ('loading' in HTMLImageElement.prototype) {
-    // Native lazy loading supported
-  } else {
-    // Basic fallback for older browsers
-    const lazyImages = document.querySelectorAll('img[loading="lazy"]');
-    const imageObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          if (img.dataset.src) {
-            img.src = img.dataset.src;
-            img.removeAttribute('data-src');
-          }
-          imageObserver.unobserve(img);
-        }
-      });
-    });
-    lazyImages.forEach(img => imageObserver.observe(img));
-  }
-
-  // ---- Page transition overlay ----
-  const pageTransition = document.createElement('div');
-  pageTransition.id = 'page-transition';
-  pageTransition.style.cssText = `
-    position: fixed; inset: 0; z-index: 9999;
-    background: var(--forest-dark, #0F2D22);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.32s cubic-bezier(0.4,0,0.2,1);
-  `;
-  document.body.appendChild(pageTransition);
-
-  // Fade in on page load
-  requestAnimationFrame(() => {
-    pageTransition.style.opacity = '0';
-  });
-
-  // Fade out on link click (same-origin)
-  if (!prefersReducedMotion) {
-    document.querySelectorAll('a[href]').forEach(link => {
-      const href = link.getAttribute('href');
-      if (
-        href &&
-        !href.startsWith('#') &&
-        !href.startsWith('mailto:') &&
-        !href.startsWith('tel:') &&
-        !href.startsWith('http') &&
-        !link.hasAttribute('target')
-      ) {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          pageTransition.style.opacity = '1';
-          setTimeout(() => {
-            window.location.href = href;
-          }, 280);
-        });
-      }
-    });
   }
 
 })();

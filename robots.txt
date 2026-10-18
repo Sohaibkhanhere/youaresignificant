@@ -1,0 +1,9 @@
+# robots.txt for Sincerely You Are Significant, Inc.
+# Official Website: https://youaresignificant.org
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://youaresignificant.org/sitemap.xml
