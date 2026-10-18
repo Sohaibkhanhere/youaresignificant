@@ -137,6 +137,12 @@
     const successEl = document.getElementById(successElementId);
     if (!formEl) return;
 
+    // Initialize speed-trap timestamp token
+    const tsInput = formEl.querySelector('[name="form_ts"]');
+    if (tsInput) {
+      tsInput.value = Date.now().toString();
+    }
+
     function showError(input, message) {
       input.classList.add('error');
       input.setAttribute('aria-invalid', 'true');
@@ -166,6 +172,23 @@
 
     formEl.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      // Client-side cooldown check (prevents rapid multi-clicks / duplicate submissions)
+      const now = Date.now();
+      const lastSub = parseInt(sessionStorage.getItem('sys_last_sub') || '0', 10);
+      if (now - lastSub < 10000) {
+        let alertBox = formEl.querySelector('.server-form-error');
+        if (!alertBox) {
+          alertBox = document.createElement('div');
+          alertBox.className = 'server-form-error';
+          alertBox.style.cssText = 'background:#fef3c7;border:1px solid #fcd34d;color:#92400e;padding:0.85rem 1rem;border-radius:var(--radius);margin-bottom:1.25rem;font-size:0.9rem;';
+          formEl.insertBefore(alertBox, formEl.firstChild);
+        }
+        alertBox.textContent = 'Please wait a few moments before sending another message.';
+        alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        return;
+      }
+
       let isValid = true;
 
       const nameInput = formEl.querySelector('[name="name"]');
@@ -207,7 +230,8 @@
         inquiry: inquiryInput ? inquiryInput.value : 'General Inquiry',
         message: messageInput ? messageInput.value.trim() : '',
         consent: consentInput ? consentInput.checked : true,
-        hp_field: hpInput ? hpInput.value : ''
+        hp_field: hpInput ? hpInput.value : '',
+        form_ts: tsInput ? tsInput.value : Date.now().toString()
       };
 
       // Loading state
@@ -232,6 +256,7 @@
         const result = await response.json().catch(() => ({}));
 
         if (response.ok && result.success) {
+          sessionStorage.setItem('sys_last_sub', Date.now().toString());
           formEl.style.display = 'none';
           if (successEl) {
             successEl.style.display = 'block';
@@ -240,27 +265,40 @@
               const refSpan = successEl.querySelector('.reference-id');
               if (refSpan) refSpan.textContent = result.referenceId;
             }
+            if (result.message) {
+              const noteEl = successEl.querySelector('.delivery-status-note');
+              if (noteEl) {
+                noteEl.textContent = result.message;
+                noteEl.style.display = 'block';
+              }
+            }
+            successEl.setAttribute('tabindex', '-1');
+            successEl.focus();
           }
-        } else if (response.status === 400) {
-          // Server-side validation failure - display errors back to user
-          const serverMsg = result.message || (result.errors && result.errors.join(' ')) || 'Please correct the highlighted fields and try again.';
+        } else if (response.status === 400 || response.status === 429) {
+          // Server-side validation failure or rate limit notice
+          const serverMsg = result.error || result.message || (result.errors && result.errors.join(' ')) || 'Please correct the highlighted fields and try again.';
           let alertBox = formEl.querySelector('.server-form-error');
           if (!alertBox) {
             alertBox = document.createElement('div');
             alertBox.className = 'server-form-error';
             alertBox.style.cssText = 'background:#fde8e8;border:1px solid #f8b4b4;color:#9b1c1c;padding:0.85rem 1rem;border-radius:var(--radius);margin-bottom:1.25rem;font-size:0.9rem;';
+            alertBox.setAttribute('role', 'alert');
             formEl.insertBefore(alertBox, formEl.firstChild);
           }
           alertBox.textContent = serverMsg;
           alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          alertBox.setAttribute('tabindex', '-1');
+          alertBox.focus();
         } else {
-          // If server responded with an error or 404 (e.g. running on local static preview server)
+          // Fallback display if server returns 404/500
           console.warn('API submission notice:', result.message || response.statusText);
-          // Graceful fallback display
           formEl.style.display = 'none';
           if (successEl) {
             successEl.style.display = 'block';
             successEl.classList.add('visible');
+            successEl.setAttribute('tabindex', '-1');
+            successEl.focus();
           }
         }
       } catch (err) {
@@ -270,6 +308,8 @@
         if (successEl) {
           successEl.style.display = 'block';
           successEl.classList.add('visible');
+          successEl.setAttribute('tabindex', '-1');
+          successEl.focus();
         }
       } finally {
         submitBtn.innerHTML = originalText;

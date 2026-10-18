@@ -56,7 +56,9 @@ const server = http.createServer(async (req, res) => {
       };
 
       try {
-        await contactHandler(req, res);
+        delete require.cache[require.resolve('./api/contact')];
+        const handler = require('./api/contact');
+        await handler(req, res);
       } catch (apiError) {
         console.error('[API Error]:', apiError);
         if (!res.headersSent) {
@@ -96,6 +98,9 @@ const server = http.createServer(async (req, res) => {
     // Security headers
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()');
+    res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.resend.com; frame-ancestors 'self'; form-action 'self'; base-uri 'self'; object-src 'none';");
 
     const stream = fs.createReadStream(targetPath);
     stream.pipe(res);

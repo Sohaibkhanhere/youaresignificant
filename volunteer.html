@@ -219,9 +219,10 @@
           <p>Please share your background and how you'd like to help.</p>
 
           <form id="volunteerForm" novalidate>
-            <!-- Honeypot anti-spam -->
+            <!-- Anti-spam: Honeypot & Timestamp Token -->
             <div style="display:none;" aria-hidden="true">
               <input type="text" name="hp_field" tabindex="-1" autocomplete="off" />
+              <input type="hidden" name="form_ts" />
             </div>
 
             <div class="form-group">
@@ -273,11 +274,15 @@
             </button>
           </form>
 
-          <div id="volunteerSuccess" class="form-success" style="display:none;margin-top:1.5rem;" role="alert">
+          <div id="volunteerSuccess" class="form-success" style="display:none;margin-top:1.5rem;" role="status" aria-live="polite">
             <div style="width:50px;height:50px;border-radius:50%;background:rgba(27,67,50,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1B4332" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <h4 style="color:var(--forest);margin-bottom:0.5rem;">Inquiry Received!</h4>
+            <h4 style="color:var(--forest);margin-bottom:0.5rem;font-size:1.4rem;">Inquiry Received!</h4>
+            <div style="background:var(--cream);border:1px dashed var(--gold);padding:0.75rem 1rem;border-radius:var(--radius);margin-bottom:1rem;font-family:monospace;font-size:0.92rem;color:var(--forest);font-weight:600;text-align:center;">
+              Volunteer Application ID: <span class="reference-id" style="color:var(--forest);letter-spacing:0.04em;">SYS-CONFIRMED</span>
+            </div>
+            <div class="delivery-status-note" style="display:none;background:var(--ivory);padding:0.85rem 1.25rem;border-radius:var(--radius);border:1px solid var(--border-light);margin-bottom:1rem;font-size:0.88rem;color:var(--text);line-height:1.7;"></div>
             <p style="font-size:0.92rem;color:var(--text-mid);line-height:1.7;">
               Thank you for your willingness to serve. A representative from Sincerely You Are Significant will review your submission and reach out with next steps.
             </p>

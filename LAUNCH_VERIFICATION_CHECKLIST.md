@@ -18,16 +18,27 @@ This document details the exact facts, credentials, and settings requiring confi
 
 ---
 
-### 2. Environment Variables for Vercel Deployment
+### 2. Environment Variables & Resend Email Forwarding Setup
 
-For live form submission email forwarding, add the following optional variables in **Vercel Project Settings > Environment Variables**:
+For live contact & volunteer inquiry email forwarding, configure these variables in **Vercel Project Settings > Environment Variables**:
 
-| Variable Name | Required? | Purpose | Example |
-|---------------|-----------|---------|---------|
-| `RESEND_API_KEY` | Optional | Dispatches contact submissions directly to `admin@youaresignificant.org` via Resend email API | `re_123456789...` |
-| `NOTIFICATION_EMAIL` | Optional | Custom email destination for inquiries (defaults to `admin@youaresignificant.org`) | `admin@youaresignificant.org` |
+| Variable Name | Required? | Purpose | Default / Example |
+|---------------|-----------|---------|-------------------|
+| `RESEND_API_KEY` | Recommended | Authenticates with Resend API to forward submissions | `re_123456789...` |
+| `RESEND_FROM_EMAIL` | Optional | Verified sender address (requires domain DNS verification in Resend) | `Sincerely You Are Significant <inquiries@youaresignificant.org>` (or `onboarding@resend.dev` for testing) |
+| `RESEND_TO_EMAIL` | Optional | Admin inbox destination receiving inquiries | `admin@youaresignificant.org` |
+| `UPSTASH_REDIS_REST_URL` | Optional | Upstash Redis REST URL for multi-region serverless rate limiting | `https://...upstash.io` |
+| `UPSTASH_REDIS_REST_TOKEN` | Optional | Upstash Redis REST Bearer Token | `AX...` |
 
-*(Note: If no API key is set, the website's `/api/contact` serverless function gracefully logs submissions safely and provides real receipt confirmation to the user.)*
+#### Exact Resend Dashboard Setup Steps:
+1. Create a free account at [resend.com](https://resend.com).
+2. Go to **Domains > Add Domain** and enter `youaresignificant.org`.
+3. Add the 3 DNS records provided by Resend (DKIM, SPF, MX) to your domain registrar (GoDaddy, Namecheap, Google Domains/Squarespace, etc.).
+4. Go to **API Keys > Create API Key**, name it `SYS Website Vercel`, and copy the key (`re_...`).
+5. Open your Vercel Dashboard for the `youaresignificant` project, navigate to **Settings > Environment Variables**, and add `RESEND_API_KEY`.
+6. *(Testing Before Domain DNS)*: While waiting for DNS propagation, you can leave `RESEND_FROM_EMAIL` unset or set to `onboarding@resend.dev` to test delivery to your verified account email.
+
+*(Note: If `RESEND_API_KEY` is not yet configured, the website's `/api/contact` serverless endpoint operates safely in standby mode: it validates submissions, defends against spam, logs an anonymous audit record with zero PII, and returns an honest status explaining that automated forwarding is in offline standby mode while directing visitors to the direct phone/email.)*
 
 ---
 

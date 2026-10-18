@@ -192,11 +192,14 @@
       <div class="grid-2" style="align-items:start;">
         <!-- LEFT COLUMN: Contact Form -->
         <div class="fade-up">
-          <!-- Important Notice: No Medical / Emergency Info -->
+          <!-- Important Notice: No Medical / Emergency Info & Youth Safety -->
           <div style="background:var(--warm-white);border:1px solid var(--border-light);border-left:4px solid var(--forest);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.75rem;line-height:1.7;" role="note">
-            <strong style="color:var(--forest);display:block;margin-bottom:0.25rem;">Confidentiality &amp; Safety Notice:</strong>
-            <p style="margin:0;font-size:0.88rem;color:var(--text-mid);">
+            <strong style="color:var(--forest);display:block;margin-bottom:0.25rem;">Confidentiality, Youth Safety &amp; Non-Emergency Notice:</strong>
+            <p style="margin:0 0 0.65rem 0;font-size:0.88rem;color:var(--text-mid);">
               Please do <strong>not</strong> enter sensitive medical history, formal psychiatric diagnoses, or emergency requests into this web form. SYS provides community human services and mentorship; we do not collect clinical medical records online. If you are experiencing a life-threatening or mental health emergency, please call <strong>911</strong> or contact the Suicide &amp; Crisis Lifeline at <strong>988</strong>.
+            </p>
+            <p style="margin:0;font-size:0.85rem;color:var(--text-light);border-top:1px dashed var(--border-light);padding-top:0.6rem;">
+              <strong>Youth &amp; Minor Inquiries:</strong> For youth under 18 seeking mentorship, a parent, legal guardian, or designated family member should submit or be aware of this inquiry. We do not knowingly collect personal information directly from unsupervised children under 13 online.
             </p>
           </div>
 
@@ -204,9 +207,10 @@
           <div class="card" style="padding: clamp(1.75rem, 4vw, 2.75rem);">
             <div id="contactForm">
               <form novalidate>
-                <!-- Honeypot anti-spam -->
+                <!-- Anti-spam: Honeypot & Timestamp Token -->
                 <div style="display:none;" aria-hidden="true">
                   <input type="text" name="hp_field" tabindex="-1" autocomplete="off" />
+                  <input type="hidden" name="form_ts" />
                 </div>
                 <!-- Full Name -->
                 <div class="form-group">
@@ -304,10 +308,11 @@
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
                 <h3 style="color:var(--forest);margin-bottom:0.75rem;font-size:1.6rem;">Thank You for Reaching Out</h3>
-                <p style="color:var(--text-mid);font-size:0.95rem;line-height:1.75;margin-bottom:1.25rem;">
-                  Your message has been received by Sincerely You Are Significant, Inc.
-                </p>
-                <div style="background:var(--ivory);padding:1rem 1.25rem;border-radius:var(--radius);border:1px solid var(--border-light);margin-bottom:1.25rem;text-align:left;font-size:0.9rem;line-height:1.7;">
+                <div style="background:var(--cream);border:1px dashed var(--gold);padding:0.75rem 1rem;border-radius:var(--radius);margin-bottom:1.25rem;font-family:monospace;font-size:0.95rem;color:var(--forest);font-weight:600;text-align:center;">
+                  Inquiry Reference ID: <span class="reference-id" style="color:var(--forest);letter-spacing:0.04em;">SYS-CONFIRMED</span>
+                </div>
+                <div class="delivery-status-note" style="display:none;background:var(--ivory);padding:0.85rem 1.25rem;border-radius:var(--radius);border:1px solid var(--border-light);margin-bottom:1.25rem;font-size:0.88rem;color:var(--text);line-height:1.7;"></div>
+                <div style="background:var(--warm-white);padding:1rem 1.25rem;border-radius:var(--radius);border:1px solid var(--border-light);margin-bottom:1.25rem;text-align:left;font-size:0.9rem;line-height:1.7;">
                   <strong>What happens next:</strong> Our staff will review your inquiry and follow up with you at the email address provided. If you requested an in-person consultation at our Jonesboro location, we will coordinate available appointment times with you.
                 </div>
                 <p style="font-size:0.92rem;color:var(--text);line-height:1.7;">
