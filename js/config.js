@@ -90,6 +90,18 @@ const SYS_CONFIG = {
     donationProcessor: 'Pending integration (Zeffy, Stripe, or PayPal Giving Fund recommended)',
     exactJonesboroHours: 'By appointment only — specific client hours pending confirmation',
     youthProgramAgeRange: 'Currently open to youth & adolescents; specific cohort ranges pending confirmation'
+  },
+
+  // Donation Integration Architecture (Config-Driven & Multi-Provider Ready)
+  // When Bianca Reid selects a provider, set provider to 'zeffy', 'paypal', or 'stripe',
+  // configure the approved URL, and the frontend will automatically surface the secure button.
+  donations: {
+    enabled: false, // Set to true once an approved provider account is configured
+    provider: null, // Options: 'zeffy' | 'paypal' | 'stripe' | null
+    checkoutUrl: null, // Direct secure hosted checkout URL (never collect card details on-site)
+    taxDeductibleDisclosure: 'Sincerely You Are Significant, Inc. is a registered 501(c)(3) tax-exempt nonprofit organization. Contributions are tax-deductible to the fullest extent permitted by law.',
+    receiptPolicy: 'Official charitable donation tax receipts are automatically issued by the payment provider upon successful transaction completion.',
+    recurringDisclosure: 'Monthly recurring contributions can be modified or cancelled at any time by contacting admin@youaresignificant.org or managing via the provider confirmation email.'
   }
 };
 
