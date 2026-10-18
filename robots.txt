@@ -5,5 +5,22 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-# Sitemap location
+# AI Search & Retrieval Crawlers (SearchGPT, Claude, Perplexity)
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /api/
+
+# Canonical Sitemap
 Sitemap: https://youaresignificant.org/sitemap.xml

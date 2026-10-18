@@ -50,7 +50,7 @@ For high ranking on Google Maps and Local Pack for *"nonprofit in Stockbridge GA
    - Primary Category: **Non-Profit Organization** or **Human Services Organization**.
    - Service Area: **Stockbridge, GA**, **Jonesboro, GA**, **Henry County, GA**, **Clayton County, GA**.
    - Address settings: If the Jonesboro location does not accept unscheduled walk-ins, configure as a **Service-Area Business (SAB)** with address hidden, or specify "Appointments Required".
-   - Appointment link: `https://youaresignificant.org/contact.html`.
+   - Appointment link: `https://youaresignificant.org/contact`.
 2. **Local Citations**:
    - Maintain exact consistency across Google Business Profile, Facebook, Instagram, and Guidestar/Candid:
      - Name: Sincerely You Are Significant, Inc.
@@ -59,7 +59,24 @@ For high ranking on Google Maps and Local Pack for *"nonprofit in Stockbridge GA
 
 ---
 
-### 4. How to Update Website Content
+### 4. Google Search Console & Bing Webmaster Verification Checklist
+
+Once the custom domain `youaresignificant.org` is live:
+1. **Add Property in Google Search Console**:
+   - Go to [search.google.com/search-console](https://search.google.com/search-console).
+   - Select **Domain property** and enter `youaresignificant.org`.
+   - Add the DNS TXT verification record provided by Google to your domain registrar (GoDaddy, Namecheap, etc.).
+2. **Submit Canonical XML Sitemap**:
+   - In Search Console, navigate to **Sitemaps > Add a new sitemap**.
+   - Enter `https://youaresignificant.org/sitemap.xml` and click **Submit**.
+3. **Verify Index Coverage**:
+   - Inspect all 11 clean URLs to verify Googlebot fetches them with HTTP 200 and recognizes the Schema.org structured data.
+4. **Bing Webmaster Tools**:
+   - Go to [bing.com/webmasters](https://www.bing.com/webmasters) and import directly from Google Search Console with one click.
+
+---
+
+### 5. How to Update Website Content
 
 - **General Organization Details**: Edit `js/config.js` to update phone, email, addresses, and social handles in one central location.
 - **Programs & Services**: Edit `services.html` sections (`#youth`, `#families`, `#seniors`, `#community`).

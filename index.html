@@ -23,29 +23,40 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "NonprofitOrganization",
-    "name": "Sincerely You Are Significant, Inc.",
-    "alternateName": "SYS",
-    "url": "https://youaresignificant.org",
-    "email": "admin@youaresignificant.org",
-    "telephone": "404-997-2563",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Eagles Landing Pkwy",
-      "addressLocality": "Stockbridge",
-      "addressRegion": "GA",
-      "postalCode": "30281",
-      "addressCountry": "US"
-    },
-    "description": "Human Services Non-Profit Agency — Guiding Youth, Empowering Lives, Building Futures.",
-    "foundingDate": "2024",
-    "founder": {
-      "@type": "Person",
-      "name": "Bianca Reid"
-    },
-    "sameAs": [
-      "https://www.instagram.com/thesysorg",
-      "https://www.facebook.com/profile.php?id=61594629771230"
+    "@graph": [
+      {
+        "@type": "NonprofitOrganization",
+        "@id": "https://youaresignificant.org/#organization",
+        "name": "Sincerely You Are Significant, Inc.",
+        "alternateName": "SYS",
+        "url": "https://youaresignificant.org",
+        "email": "admin@youaresignificant.org",
+        "telephone": "404-997-2563",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Eagles Landing Pkwy",
+          "addressLocality": "Stockbridge",
+          "addressRegion": "GA",
+          "postalCode": "30281",
+          "addressCountry": "US"
+        },
+        "description": "Human Services Non-Profit Agency — Guiding Youth, Empowering Lives, Building Futures.",
+        "founder": {
+          "@type": "Person",
+          "name": "Bianca Reid"
+        },
+        "sameAs": [
+          "https://www.instagram.com/thesysorg",
+          "https://www.facebook.com/profile.php?id=61594629771230"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://youaresignificant.org/#website",
+        "url": "https://youaresignificant.org",
+        "name": "Sincerely You Are Significant, Inc.",
+        "publisher": { "@id": "https://youaresignificant.org/#organization" }
+      }
     ]
   }
   </script>

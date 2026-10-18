@@ -1,4 +1,4 @@
-# Sincerely You Are Significant, Inc. — Comprehensive Knowledge Base
+# Sincerely You Are Significant, Inc. — Comprehensive Knowledge Base & AEO Reference
 
 ## Organization Overview
 Sincerely You Are Significant, Inc. (often known publicly as "You Are Significant" or SYS) is an authorized 501(c)(3) tax-exempt human services nonprofit agency operating in the state of Georgia, United States. The organization was founded and is actively led by Bianca Reid (Founder & Provider).
@@ -22,6 +22,7 @@ Bianca Reid and SYS approach human services through four pillars:
    - Positive adult mentorship relationships.
    - Life skills development, accountability, and goal setting.
    - Safe emotional haven for adolescents.
+   - Requirement: Mentors undergo background screening and orientation.
 2. Family Support Services:
    - Resource navigation and family stabilization guidance.
    - Compassionate problem-solving for difficult seasons.
@@ -39,3 +40,15 @@ Bianca Reid and SYS approach human services through four pillars:
 - Official Website: https://youaresignificant.org.
 - Public Profiles: Instagram (@theSYSorg), Facebook (Sincerely You Are Significant, Inc.).
 - Tax Status: Contributions to Sincerely You Are Significant, Inc. are tax-deductible to the extent permitted by law under Section 501(c)(3) of the Internal Revenue Code.
+
+## Direct Fact Retrieval Index (AEO)
+- Legal Entity: Sincerely You Are Significant, Inc.
+- Federal Exemption: 501(c)(3) Public Charity (Human Services)
+- Leadership: Bianca Reid, Founder & Provider
+- Geographical Coverage: Stockbridge, GA; Jonesboro, GA; Henry County; Clayton County; South Metro Atlanta
+- Appointment Line: (404) 997-2563
+- Direct Intake URL: https://youaresignificant.org/contact
+- Volunteer Application URL: https://youaresignificant.org/volunteer
+- Financial Stewardship URL: https://youaresignificant.org/impact
+- Charitable Giving URL: https://youaresignificant.org/support
+- Emergency Disclaimer: Non-crisis community service agency. Life-threatening emergencies are directed to 911 or the 988 Suicide & Crisis Lifeline.
