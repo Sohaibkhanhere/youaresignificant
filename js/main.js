@@ -35,10 +35,12 @@
   updateNav();
 
   // ---- Navigation: Active link highlighting ----
-  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+  const cleanCurrentPage = currentPath.split('/').pop().replace(/\.html$/, '') || 'index';
   document.querySelectorAll('.nav__link, .nav__mobile-link').forEach(link => {
-    const href = link.getAttribute('href');
-    if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+    const href = link.getAttribute('href') || '';
+    const cleanHref = href.split('/').pop().replace(/\.html$/, '');
+    if (cleanHref === cleanCurrentPage || (cleanCurrentPage === 'index' && (cleanHref === '' || cleanHref === 'index'))) {
       link.classList.add('active');
     }
   });
@@ -239,6 +241,18 @@
               if (refSpan) refSpan.textContent = result.referenceId;
             }
           }
+        } else if (response.status === 400) {
+          // Server-side validation failure - display errors back to user
+          const serverMsg = result.message || (result.errors && result.errors.join(' ')) || 'Please correct the highlighted fields and try again.';
+          let alertBox = formEl.querySelector('.server-form-error');
+          if (!alertBox) {
+            alertBox = document.createElement('div');
+            alertBox.className = 'server-form-error';
+            alertBox.style.cssText = 'background:#fde8e8;border:1px solid #f8b4b4;color:#9b1c1c;padding:0.85rem 1rem;border-radius:var(--radius);margin-bottom:1.25rem;font-size:0.9rem;';
+            formEl.insertBefore(alertBox, formEl.firstChild);
+          }
+          alertBox.textContent = serverMsg;
+          alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         } else {
           // If server responded with an error or 404 (e.g. running on local static preview server)
           console.warn('API submission notice:', result.message || response.statusText);

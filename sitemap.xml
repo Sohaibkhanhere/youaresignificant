@@ -14,7 +14,7 @@
 
   <!-- About Us -->
   <url>
-    <loc>https://youaresignificant.org/about.html</loc>
+    <loc>https://youaresignificant.org/about</loc>
     <lastmod>2026-10-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -22,7 +22,7 @@
 
   <!-- Services & Programs -->
   <url>
-    <loc>https://youaresignificant.org/services.html</loc>
+    <loc>https://youaresignificant.org/services</loc>
     <lastmod>2026-10-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -30,7 +30,7 @@
 
   <!-- Founder: Bianca Reid -->
   <url>
-    <loc>https://youaresignificant.org/founder.html</loc>
+    <loc>https://youaresignificant.org/founder</loc>
     <lastmod>2026-10-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -38,7 +38,7 @@
 
   <!-- Community & Outreach -->
   <url>
-    <loc>https://youaresignificant.org/community.html</loc>
+    <loc>https://youaresignificant.org/community</loc>
     <lastmod>2026-10-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -46,7 +46,7 @@
 
   <!-- Get Support & Contact -->
   <url>
-    <loc>https://youaresignificant.org/contact.html</loc>
+    <loc>https://youaresignificant.org/contact</loc>
     <lastmod>2026-10-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -54,7 +54,7 @@
 
   <!-- Support Our Mission & Giving -->
   <url>
-    <loc>https://youaresignificant.org/support.html</loc>
+    <loc>https://youaresignificant.org/support</loc>
     <lastmod>2026-10-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -62,7 +62,7 @@
 
   <!-- Volunteer Opportunities -->
   <url>
-    <loc>https://youaresignificant.org/volunteer.html</loc>
+    <loc>https://youaresignificant.org/volunteer</loc>
     <lastmod>2026-10-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -70,7 +70,7 @@
 
   <!-- Impact & Transparency -->
   <url>
-    <loc>https://youaresignificant.org/impact.html</loc>
+    <loc>https://youaresignificant.org/impact</loc>
     <lastmod>2026-10-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -78,7 +78,7 @@
 
   <!-- Privacy Policy & Accessibility -->
   <url>
-    <loc>https://youaresignificant.org/privacy.html</loc>
+    <loc>https://youaresignificant.org/privacy</loc>
     <lastmod>2026-10-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
@@ -86,7 +86,7 @@
 
   <!-- Terms of Use -->
   <url>
-    <loc>https://youaresignificant.org/terms.html</loc>
+    <loc>https://youaresignificant.org/terms</loc>
     <lastmod>2026-10-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
