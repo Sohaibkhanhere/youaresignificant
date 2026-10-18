@@ -349,6 +349,42 @@
     });
   });
 
+  // ---- Config-Driven Donation Architecture Loader ----
+  // If Bianca Reid configures an approved online provider in js/config.js,
+  // dynamically render the verified secure payment button without changing HTML template markup.
+  try {
+    if (typeof SYS_CONFIG !== 'undefined' && SYS_CONFIG.donations && SYS_CONFIG.donations.enabled && SYS_CONFIG.donations.checkoutUrl) {
+      const donateCard = document.querySelector('.donate-placeholder');
+      if (donateCard) {
+        const titleEl = donateCard.querySelector('h3');
+        const descEl = donateCard.querySelector('p');
+        const btnGroup = donateCard.querySelector('.btn-group');
+
+        if (titleEl) titleEl.textContent = 'Make a Secure Online Donation';
+        if (descEl) {
+          descEl.innerHTML = `
+            Your tax-deductible gift directly empowers youth, assists seniors, and strengthens local families in Stockbridge, Jonesboro, and South Metro Atlanta.
+            <br><small style="color:var(--text-light);display:block;margin-top:0.5rem;">${SYS_CONFIG.donations.taxDeductibleDisclosure || ''}</small>
+          `;
+        }
+        if (btnGroup) {
+          const providerName = SYS_CONFIG.donations.provider === 'zeffy' ? 'Zeffy (100% Free - 0% Fees)' : (SYS_CONFIG.donations.provider === 'paypal' ? 'PayPal Giving Fund' : 'Secure Checkout');
+          btnGroup.innerHTML = `
+            <a href="${SYS_CONFIG.donations.checkoutUrl}" target="_blank" rel="noopener noreferrer" class="btn btn--gold" style="font-size:1.05rem;padding:0.9rem 2rem;box-shadow:var(--shadow-md);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              Donate Online via ${providerName} →
+            </a>
+            <a href="mailto:admin@youaresignificant.org?subject=Charitable%20Donation%20Inquiry" class="btn btn--outline">
+              Inquire About Other Giving
+            </a>
+          `;
+        }
+      }
+    }
+  } catch (err) {
+    // Graceful silent fallback to static mail/phone directions
+  }
+
   // ---- Spin icon CSS helper ----
   if (!document.getElementById('spin-style')) {
     const style = document.createElement('style');
